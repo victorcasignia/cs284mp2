@@ -61,7 +61,7 @@ def test(data,
 
         # Load model
         #model = Darknet(opt.cfg).to(device)
-        model = torch.hub.load('pytorch/vision:v0.10.0', 'fcn_resnet101', pretrained=True).to(device)
+        model = torch.hub.load('pytorch/vision:v0.10.0', 'fcn_resnet50', pretrained=True).to(device)
         # load model
         try:
             ckpt = torch.load(weights[0], map_location=device)  # load checkpoint
