@@ -19,7 +19,6 @@ from utils.plots import plot_images, output_to_target
 from utils.torch_utils import select_device, time_synchronized
 
 from models.models import *
-from torchvision.models.segmentation import fcn_resnet50
 
 def load_classes(path):
     # Loads *.names file at 'path'
@@ -61,8 +60,8 @@ def test(data,
         (save_dir / 'labels' if save_txt else save_dir).mkdir(parents=True, exist_ok=True)  # make dir
 
         # Load model
-        #model = Darknet(opt.cfg).to(device)
-        model = fcn_resnet50(opt.cfg).to(device)
+        model = Darknet(opt.cfg).to(device)
+
         # load model
         try:
             ckpt = torch.load(weights[0], map_location=device)  # load checkpoint

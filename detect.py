@@ -8,8 +8,6 @@ from pathlib import Path
 import cv2
 import torch
 import torch.backends.cudnn as cudnn
-
-from torchvision.models.segmentation import fcn_resnet50
 from numpy import random
 
 from utils.google_utils import attempt_load
@@ -42,8 +40,7 @@ def detect(save_img=False):
     half = device.type != 'cpu'  # half precision only supported on CUDA
 
     # Load model
-    #model = Darknet(cfg, imgsz).cuda()
-    model = fcn_resnet50().cuda()
+    model = Darknet(cfg, imgsz).cuda()
     model.load_state_dict(torch.load(weights[0], map_location=device)['model'])
     #model = attempt_load(weights, map_location=device)  # load FP32 model
     #imgsz = check_img_size(imgsz, s=model.stride.max())  # check img_size
@@ -51,8 +48,6 @@ def detect(save_img=False):
     if half:
         model.half()  # to FP16
 
-    print(model.eval())
-    save_txt = True
     # Second-stage classifier
     classify = False
     if classify:
