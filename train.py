@@ -88,7 +88,7 @@ def train(hyp, opt, device, tb_writer=None, wandb=None):
         #model = Darknet(opt.cfg).to(device) # create
         model = models.resnet101(pretrained=True).to(device)
 
-    print(model.evel())
+    print(model.eval())
     # Optimizer
     nbs = 64  # nominal batch size
     accumulate = max(round(nbs / total_batch_size), 1)  # accumulate loss before optimizing
