@@ -60,8 +60,8 @@ def test(data,
         (save_dir / 'labels' if save_txt else save_dir).mkdir(parents=True, exist_ok=True)  # make dir
 
         # Load model
-        model = Darknet(opt.cfg).to(device)
-
+        #model = Darknet(opt.cfg).to(device)
+        model = torch.hub.load('pytorch/vision:v0.10.0', 'fcn_resnet101', pretrained=True).to(device)
         # load model
         try:
             ckpt = torch.load(weights[0], map_location=device)  # load checkpoint
