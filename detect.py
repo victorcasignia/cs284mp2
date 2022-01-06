@@ -112,7 +112,7 @@ def detect(save_img=False):
                 for c in det[:, -1].unique():
                     print(c)
                     n = (det[:, -1] == c).sum()  # detections per class
-                    s += '%g %ss, ' % (n, names[int(c)])  # add to string
+                    s += '%g %ss, ' % (n, names[int(c) % len(names)])  # add to string
 
                 # Write results
                 for *xyxy, conf, cls in det:
