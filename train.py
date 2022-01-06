@@ -159,7 +159,7 @@ def train(hyp, opt, device, tb_writer=None, wandb=None):
                         (weights, ckpt['epoch'], epochs))
             epochs += ckpt['epoch']  # finetune additional epochs
 
-        del ckpt, state_dict
+        del ckpt
 
     # Image sizes
     gs = 64 #int(max(model.stride))  # grid size (max stride)
