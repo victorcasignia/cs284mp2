@@ -19,6 +19,7 @@ from utils.plots import plot_images, output_to_target
 from utils.torch_utils import select_device, time_synchronized
 
 from models.models import *
+import torchvision.models as models
 
 def load_classes(path):
     # Loads *.names file at 'path'
@@ -61,7 +62,7 @@ def test(data,
 
         # Load model
         #model = Darknet(opt.cfg).to(device)
-        model = torch.hub.load('pytorch/vision:v0.10.0', 'fcn_resnet50', pretrained=True).to(device)
+        model = models.resnet101(opt.cfg).to(device)
         # load model
         try:
             ckpt = torch.load(weights[0], map_location=device)  # load checkpoint

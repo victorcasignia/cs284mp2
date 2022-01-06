@@ -8,6 +8,8 @@ from pathlib import Path
 import cv2
 import torch
 import torch.backends.cudnn as cudnn
+
+import torchvision.models as models
 from numpy import random
 
 from utils.google_utils import attempt_load
@@ -41,7 +43,7 @@ def detect(save_img=False):
 
     # Load model
     #model = Darknet(cfg, imgsz).cuda()
-    model = torch.hub.load('pytorch/vision:v0.10.0', 'fcn_resnet50', pretrained=True).cuda()
+    model = models.resnet101().cuda()
     model.load_state_dict(torch.load(weights[0], map_location=device)['model'])
     #model = attempt_load(weights, map_location=device)  # load FP32 model
     #imgsz = check_img_size(imgsz, s=model.stride.max())  # check img_size

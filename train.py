@@ -32,6 +32,7 @@ from utils.google_utils import attempt_download
 from utils.loss import compute_loss
 from utils.plots import plot_images, plot_labels, plot_results, plot_evolution
 from utils.torch_utils import ModelEMA, select_device, intersect_dicts, torch_distributed_zero_first
+import torchvision.models as models
 
 logger = logging.getLogger(__name__)
 
@@ -79,13 +80,13 @@ def train(hyp, opt, device, tb_writer=None, wandb=None):
             attempt_download(weights)  # download if not found locally
         ckpt = torch.load(weights, map_location=device)  # load checkpoint
         #model = Darknet(opt.cfg).to(device)  # create
-        model = torch.hub.load('pytorch/vision:v0.10.0', 'fcn_resnet50', pretrained=True).to(device)
+        model = models.resnet101(opt.cfg, pretrained=True).to(device)
         state_dict = {k: v for k, v in ckpt['model'].items() if model.state_dict()[k].numel() == v.numel()}
         model.load_state_dict(state_dict, strict=False)
         print('Transferred %g/%g items from %s' % (len(state_dict), len(model.state_dict()), weights))  # report
     else:
         #model = Darknet(opt.cfg).to(device) # create
-        model = torch.hub.load('pytorch/vision:v0.10.0', 'fcn_resnet50', pretrained=True).to(device)
+        model = models.resnet101(opt.cfg, pretrained=True).to(device)
 
     print(model.evel())
     # Optimizer
