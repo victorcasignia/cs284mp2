@@ -100,7 +100,7 @@ def detect(save_img=False):
                 p, s, im0 = path, '', im0s
 
             save_path = str(Path(out) / Path(p).name)
-            txt_path = str(Path(out) / Path(p).stem) + ('_%g' % dataset.frame if dataset.mode == 'video' else '')
+            txt_path = str(Path(out) / Path(p).stem) + ('_%g' % dataset.frame if dataset.mode == 'video' else '') + str(path)
             s += '%gx%g ' % img.shape[2:]  # print string
             gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
             if det is not None and len(det):
@@ -114,9 +114,9 @@ def detect(save_img=False):
 
                 # Write results
                 for *xyxy, conf, cls in det:
-                    if save_txt:  # Write to file
+                    if True:  # Write to file
                         xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
-                        with open(txt_path + '.txt', 'a') as f:
+                        with open(txt_path + '.txt', 'w') as f:
                             f.write(('%g ' * 5 + '\n') % (cls, *xywh))  # label format
 
                     if save_img or view_img:  # Add bbox to image
